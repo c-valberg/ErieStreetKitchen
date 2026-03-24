@@ -1,0 +1,321 @@
+/* =============================================
+   ERIE STREET KITCHEN — catering.css
+   Styles specific to catering.html
+   ============================================= */
+
+
+/* =============================================
+   LOADER — ALT GREEN
+   ============================================= */
+
+#loader-altgreen {
+    position: fixed;
+    inset: 0;
+    background: var(--black);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.5s ease 0.2s;
+}
+
+#loader-altgreen.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.loader-altgreen-inner {
+    text-align: left;
+}
+
+.loader-altgreen-title {
+    display: flex;
+    flex-direction: column;
+    line-height: 0.9;
+    position: relative;
+}
+
+.loader-altgreen-word {
+    font-family: var(--font-display);
+    font-size: clamp(5rem, 14vw, 14rem);
+    color: var(--green);
+    display: block;
+    position: relative;
+    opacity: 0;
+    transform: translateY(40px);
+    animation: slideUp 0.7s ease forwards;
+}
+
+
+.loader-altgreen-icon {
+    position: absolute;
+    top: 0.05em;        /* move UP = more negative e.g. -0.2em | move DOWN = more positive e.g. 0.3em */
+    left: 50%;         /* horizontal anchor — 100% = right edge of ERIE | decrease to overlap left e.g. 80% */
+    margin-left: 0.15em; /* gap between ERIE and icon — increase to push right, decrease to pull left */
+    height: 0.8em;      /* size — scales with font. bigger = e.g. 1em | smaller = e.g. 0.5em */
+    width: auto;        /* keeps aspect ratio — don't change this */
+    opacity: 0;
+    transform: translateY(40px);
+    animation: slideUp 0.7s ease forwards;
+    animation-delay: 0.18s;
+}
+
+.loader-altgreen-bar-track {
+    width: 100%;
+    height: 2px;
+    background: rgba(255,255,255,0.1);
+    margin-top: 2rem;
+}
+
+.loader-altgreen-bar {
+    height: 100%;
+    width: 0%;
+    background: var(--green);
+    transition: width 0.1s ease;
+}
+
+
+
+
+/* =============================================
+   HERO
+   ============================================= */
+
+.catering-hero {
+    min-height: 100vh;
+    background: var(--black);
+    display: flex;
+    align-items: center;        /* vertically center (was flex-end) */
+    justify-content: center;    /* horizontally center */
+    padding: 6rem clamp(1.5rem, 8vw, 9rem) 5rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.catering-hero-inner {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;        /* center children horizontally */
+    text-align: center;         /* center the text itself */
+    gap: 2rem;
+}
+
+.catering-hero::after {
+    position: absolute;
+    bottom: -0.15em;
+    right: -0.05em;
+    font-family: var(--font-display);
+    font-size: clamp(6rem, 18vw, 20rem);
+    color: var(--green);
+    opacity: 0.06;
+    line-height: 1;
+    pointer-events: none;
+    white-space: nowrap;
+}
+
+.catering-eyebrow {
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 0.75rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--green);
+}
+
+.catering-title {
+    font-family: var(--font-display);
+    font-size: clamp(4rem, 12vw, 12rem);
+    color: var(--white);
+    line-height: 0.9;
+    letter-spacing: 0.02em;
+}
+
+/* button */
+
+.btn {
+    display: inline-block;
+    display: inline-block;
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--white);
+    background: var(--green);
+    padding: 0.9rem 2rem;
+    border: 2px solid var(--green);
+    transition: background 0.25s, color 0.25s;
+    opacity: 0;
+    animation: fadeIn 0.6s ease 1s forwards;
+    
+}
+
+.btn:hover {
+    background: transparent;
+    color: var(--green);
+}
+
+@keyframes fadeIn {
+    to { opacity: 1; }
+}
+
+
+/* button - alt */
+
+.btn-alt {
+    display: inline-block;
+    align-self: flex-start;
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--white);
+    background: var(--green);
+    padding: 0.9rem 2rem;
+    border: 2px solid var(--white);
+    transition: background 0.25s, color 0.25s;
+    opacity: 0;
+    animation: fadeIn 0.6s ease 1s forwards;
+}
+
+.btn-alt:hover {
+    background: var(--white);
+    color: var(--green);
+}
+
+
+@keyframes fadeIn {
+    to { opacity: 1; }
+}
+
+
+/* =============================================
+   SELLING POINTS
+   ============================================= */
+
+.catering-points {
+    background: var(--cream);
+    padding: clamp(4rem, 8vw, 8rem) clamp(1.5rem, 8vw, 9rem);
+}
+
+.catering-points-inner {
+    max-width: 900px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.point {
+    display: grid;
+    grid-template-columns: 5rem 1fr;
+    gap: 2rem;
+    padding: 3rem 0;
+    align-items: start;
+}
+
+.point-number {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    color: var(--green);
+    letter-spacing: 0.1em;
+    padding-top: 0.4rem;
+    opacity: 0.6;
+}
+
+.point-content h3 {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    color: var(--black);
+    letter-spacing: 0.03em;
+    margin-bottom: 0.75rem;
+}
+
+.point-content p {
+    font-family: var(--font-body);
+    font-size: clamp(0.85rem, 1.5vw, 1rem);
+    line-height: 1.7;
+    opacity: 0.6;
+    letter-spacing: 0.02em;
+    text-transform: none;
+}
+
+.point-divider {
+    width: 100%;
+    height: 1px;
+    background: var(--black);
+    opacity: 0.08;
+}
+
+
+/* =============================================
+   CTA BAND
+   ============================================= */
+
+.catering-band {
+    background: var(--green);
+    padding: clamp(4rem, 8vw, 7rem) clamp(1.5rem, 8vw, 9rem);
+}
+
+.catering-band-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    max-width: 700px;
+}
+
+.catering-band h2 {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    color: var(--white);
+    letter-spacing: 0.03em;
+    line-height: 1;
+}
+
+.catering-band p {
+    font-family: var(--font-body);
+    font-size: clamp(0.8rem, 1.5vw, 1rem);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--white);
+    opacity: 0.7;
+}
+
+.catering-cta--dark {
+    color: var(--white);
+    background: var(--black);
+    border-color: var(--black);
+    margin-top: 0.75rem;
+}
+
+.catering-cta--dark:hover {
+    background: transparent;
+    color: var(--white);
+    border-color: var(--white);
+}
+
+
+/* =============================================
+   RESPONSIVE
+   ============================================= */
+
+@media (max-width: 768px) {
+    .catering-hero {
+        align-items: flex-start;
+        padding-top: 8rem;
+    }
+
+    .catering-hero::after {
+        display: none;
+    }
+
+    .point {
+        grid-template-columns: 3rem 1fr;
+        gap: 1rem;
+        padding: 2rem 0;
+    }
+}

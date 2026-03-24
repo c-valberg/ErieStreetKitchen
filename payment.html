@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete Your Booking — Erie Street Kitchen</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Righteous&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="./pictures/ESK-icon.png" type="image/png">
+    <style>
+        :root {
+            --red:    #E80003;
+            --black:  #000000;
+            --white:  #FEFCF7;
+            --cream:  #F5F0E8;
+            --green:  #7CA583;
+            --font-display: 'Righteous', cursive;
+            --font-body:    'Nunito', sans-serif;
+        }
+
+        body {
+            background: var(--white);
+            color: var(--black);
+            font-family: var(--font-body);
+            overflow-x: hidden;
+        }
+
+        /* ── HERO ── */
+        .payment-hero {
+            background: var(--black);
+            padding: 10rem 3rem 5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .payment-hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(
+                -45deg,
+                transparent,
+                transparent 40px,
+                rgba(232,0,3,0.04) 40px,
+                rgba(232,0,3,0.04) 41px
+            );
+            pointer-events: none;
+        }
+
+        .payment-hero-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .payment-eyebrow {
+            font-family: var(--font-body);
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--red);
+            margin-bottom: 1rem;
+            opacity: 0;
+            animation: fadeUp 0.6s ease 0.2s forwards;
+        }
+
+        .payment-title {
+            font-family: var(--font-display);
+            font-size: clamp(3rem, 8vw, 7rem);
+            color: var(--white);
+            line-height: 0.95;
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            animation: fadeUp 0.6s ease 0.4s forwards;
+        }
+
+        .payment-subtitle {
+            font-family: var(--font-body);
+            font-size: 1rem;
+            color: var(--white);
+            letter-spacing: 0.05em;
+            max-width: 500px;
+            opacity: 0;
+            animation: fadeUp 0.6s ease 0.6s forwards;
+        }
+
+        .payment-subtitle span {
+            opacity: 0.45;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ── BODY ── */
+        .payment-body {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 5rem 3rem 8rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: start;
+        }
+
+        /* ── PANEL SHARED ── */
+        .panel-eyebrow {
+            font-family: var(--font-body);
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--black);
+            opacity: 0.4;
+            margin-bottom: 0.5rem;
+        }
+
+        .panel-label {
+            font-family: var(--font-display);
+            font-size: clamp(1.5rem, 3vw, 2.2rem);
+            color: var(--black);
+            letter-spacing: 0.03em;
+            margin-bottom: 1.5rem;
+        }
+
+        .panel-rule {
+            height: 2px;
+            background: var(--black);
+            opacity: 0.07;
+            margin-bottom: 2rem;
+        }
+
+        /* ── ORDER SUMMARY ── */
+        .summary-panel {
+            background: var(--cream);
+            padding: 2.5rem;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 1rem;
+            padding: 0.65rem 0;
+            border-bottom: 1px solid rgba(0,0,0,0.07);
+        }
+
+        .summary-row:last-of-type {
+            border-bottom: none;
+        }
+
+        .summary-key {
+            font-family: var(--font-body);
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--black);
+            opacity: 0.4;
+            flex-shrink: 0;
+        }
+
+        .summary-val {
+            font-family: var(--font-body);
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--black);
+            text-align: right;
+        }
+
+        .menu-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            justify-content: flex-end;
+        }
+
+        .menu-tag {
+            font-family: var(--font-body);
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            background: var(--white);
+            color: var(--black);
+            padding: 0.3rem 0.7rem;
+            border: 1.5px solid rgba(0,0,0,0.12);
+        }
+
+        .summary-divider {
+            height: 2px;
+            background: var(--black);
+            opacity: 0.08;
+            margin: 1.5rem 0;
+        }
+
+        .deposit-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .deposit-label {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            color: var(--black);
+            letter-spacing: 0.03em;
+        }
+
+        .deposit-amount {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            color: var(--red);
+            letter-spacing: 0.02em;
+        }
+
+        .deposit-note {
+            font-family: var(--font-body);
+            font-size: 0.82rem;
+            color: var(--black);
+            opacity: 0.4;
+            margin-top: 0.75rem;
+            letter-spacing: 0.05em;
+            line-height: 1.7;
+        }
+
+        /* ── PAYMENT FORM ── */
+        .payment-panel {
+            padding: 2.5rem;
+            background: var(--white);
+            border: 2px solid rgba(0,0,0,0.06);
+        }
+
+        .field {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .field label {
+            font-family: var(--font-body);
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--black);
+            opacity: 0.5;
+        }
+
+        .field input {
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            color: var(--black);
+            background: var(--cream);
+            border: 2px solid transparent;
+            padding: 0.85rem 1rem;
+            outline: none;
+            width: 100%;
+            transition: border-color 0.2s, background 0.2s;
+        }
+
+        .field input:focus {
+            border-color: var(--red);
+            background: var(--white);
+        }
+
+        .field-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .card-icon-wrap {
+            position: relative;
+        }
+
+        .card-icon-wrap input {
+            padding-right: 3.5rem;
+        }
+
+        .card-type-icon {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.2rem;
+            pointer-events: none;
+            opacity: 0.4;
+        }
+
+        .pay-btn {
+            width: 100%;
+            font-family: var(--font-body);
+            font-weight: 700;
+            font-size: 1rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--white);
+            background: var(--red);
+            border: 2px solid var(--red);
+            padding: 1.1rem 2rem;
+            cursor: pointer;
+            transition: background 0.25s, color 0.25s;
+            margin-top: 0.5rem;
+        }
+
+        .pay-btn:hover:not(:disabled) {
+            background: transparent;
+            color: var(--red);
+        }
+
+        .pay-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .trust-row {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            justify-content: center;
+        }
+
+        .trust-row span {
+            font-family: var(--font-body);
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--black);
+            opacity: 0.35;
+        }
+
+        /* ── CONFIRMATION ── */
+        #confirmation {
+            display: none;
+        }
+
+        #confirmation.show {
+            display: block;
+        }
+
+        .confirm-inner {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 8rem 3rem;
+            text-align: center;
+        }
+
+        .confirm-check {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: var(--green);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 2rem;
+        }
+
+        .confirm-check svg {
+            width: 28px;
+            height: 28px;
+            stroke: var(--white);
+            fill: none;
+            stroke-width: 2.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .confirm-title {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            color: var(--black);
+            margin-bottom: 1rem;
+            letter-spacing: 0.03em;
+        }
+
+        .confirm-sub {
+            font-family: var(--font-body);
+            font-size: 1rem;
+            color: var(--black);
+            opacity: 0.5;
+            line-height: 1.7;
+            max-width: 420px;
+            margin: 0 auto 2rem;
+        }
+
+        .confirm-back {
+            font-family: var(--font-body);
+            font-weight: 700;
+            font-size: 0.8rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--red);
+            text-decoration: none;
+            border-bottom: 2px solid var(--red);
+            padding-bottom: 2px;
+        }
+
+        /* ── FOOTER ── */
+        .footer {
+            background: var(--black);
+            color: var(--white);
+            padding: 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+
+        .footer-logo {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            color: var(--white);
+            letter-spacing: 0.05em;
+        }
+
+        .footer-links { list-style: none; display: flex; gap: 2rem; }
+        .footer-links a {
+            font-family: var(--font-body);
+            font-weight: 700;
+            font-size: 0.8rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            text-decoration: none;
+            color: var(--white);
+            transition: color 0.2s;
+        }
+        .footer-links a:hover { color: var(--red); }
+
+        .footer-copy {
+            font-family: var(--font-body);
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            opacity: 0.4;
+            text-transform: uppercase;
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 860px) {
+            .payment-body {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                padding: 3rem 1.5rem 5rem;
+            }
+            .payment-hero { padding: 8rem 1.5rem 4rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- LOADER -->
+    <div id="loader">
+        <div class="loader-inner">
+            <div class="loader-title">
+                <span class="loader-word" style="animation-delay: 0.1s">
+                    ERIE
+                    <img src="./pictures/ESK-icon.png" class="loader-icon" alt="">
+                </span>
+                <span class="loader-word" style="animation-delay: 0.25s">STREET</span>
+                <span class="loader-word" style="animation-delay: 0.4s">KITCHEN</span>
+            </div>
+            <div class="loader-bar-track">
+                <div class="loader-bar"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- NAV -->
+    <nav class="navbar">
+        <div class="nav-inner">
+            <div class="nav-logo">
+                <a href="index.html">
+                    <img src="./pictures/ESK-icon.png" alt="Erie Street Kitchen">
+                </a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="menu.html">Menu</a></li>
+                <li><a href="catering.html">Catering</a></li>
+            </ul>
+            <button class="hamburger" aria-label="Toggle menu" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+        <div class="mobile-menu">
+            <ul>
+                <li><a href="menu.html">Menu</a></li>
+                <li><a href="catering.html">Catering</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <div class="payment-hero">
+        <div class="payment-hero-inner">
+            <p class="payment-eyebrow">Erie Street Kitchen</p>
+            <h1 class="payment-title">Secure<br>Your Date.</h1>
+            <p class="payment-subtitle"><span>Review your booking and complete your deposit to lock in the date.</span></p>
+        </div>
+    </div>
+
+    <!-- CONFIRMATION (shown after payment) -->
+    <div id="confirmation">
+        <div class="confirm-inner">
+            <div class="confirm-check">
+                <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <h2 class="confirm-title">You're Booked.</h2>
+            <p class="confirm-sub">Your deposit has been received. We'll be in touch within 24 hours to confirm all the details for your event.</p>
+            <a href="index.html" class="confirm-back">← Back to Home</a>
+        </div>
+    </div>
+
+    <!-- PAYMENT BODY -->
+    <div class="payment-body" id="payment-content">
+
+        <!-- ORDER SUMMARY -->
+        <div class="summary-panel animate-up">
+            <p class="panel-eyebrow">Your Order</p>
+            <h2 class="panel-label">Booking Summary</h2>
+            <div class="panel-rule"></div>
+
+            <div class="summary-row">
+                <span class="summary-key">Name</span>
+                <span class="summary-val" id="s-name">—</span>
+            </div>
+            <div class="summary-row">
+                <span class="summary-key">Date</span>
+                <span class="summary-val" id="s-date">—</span>
+            </div>
+            <div class="summary-row">
+                <span class="summary-key">Time</span>
+                <span class="summary-val" id="s-time">—</span>
+            </div>
+            <div class="summary-row">
+                <span class="summary-key">Guests</span>
+                <span class="summary-val" id="s-guests">—</span>
+            </div>
+            <div class="summary-row">
+                <span class="summary-key">Type</span>
+                <span class="summary-val" id="s-type">—</span>
+            </div>
+            <div class="summary-row">
+                <span class="summary-key">Location</span>
+                <span class="summary-val" id="s-location">—</span>
+            </div>
+            <div class="summary-row" id="s-menu-row">
+                <span class="summary-key">Menu</span>
+                <div class="menu-tags" id="s-menu">—</div>
+            </div>
+
+            <div class="summary-divider"></div>
+
+            <div class="deposit-row">
+                <span class="deposit-label">Deposit Due</span>
+                <span class="deposit-amount">$200</span>
+            </div>
+            <p class="deposit-note">
+                Balance invoiced 14 days before your event.<br>
+                Final quote emailed within 24 hours of booking.
+            </p>
+        </div>
+
+        <!-- PAYMENT FORM -->
+        <div class="payment-panel animate-up" style="animation-delay: 0.1s">
+            <p class="panel-eyebrow">Deposit — $200</p>
+            <h2 class="panel-label">Payment Details</h2>
+            <div class="panel-rule"></div>
+
+            <form id="payment-form" novalidate>
+                <div class="field">
+                    <label for="card-number">Card Number</label>
+                    <div class="card-icon-wrap">
+                        <input type="text" id="card-number" placeholder="0000 0000 0000 0000"
+                               maxlength="19" autocomplete="cc-number" inputmode="numeric" required>
+                        <span class="card-type-icon" id="card-icon">💳</span>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label for="card-name">Name on Card</label>
+                    <input type="text" id="card-name" placeholder="Jane Smith"
+                           autocomplete="cc-name" required>
+                </div>
+
+                <div class="field-row">
+                    <div class="field">
+                        <label for="card-expiry">Expiry</label>
+                        <input type="text" id="card-expiry" placeholder="MM / YY"
+                               maxlength="7" autocomplete="cc-exp" inputmode="numeric" required>
+                    </div>
+                    <div class="field">
+                        <label for="card-cvv">CVV</label>
+                        <input type="text" id="card-cvv" placeholder="000"
+                               maxlength="4" autocomplete="cc-csc" inputmode="numeric" required>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label for="card-zip">Billing ZIP</label>
+                    <input type="text" id="card-zip" placeholder="44240"
+                           maxlength="10" inputmode="numeric" required>
+                </div>
+
+                <button type="submit" class="pay-btn" id="pay-btn">
+                    Pay Deposit — $200
+                </button>
+
+                <div class="trust-row">
+                    <span>🔒 256-bit SSL encrypted · No card data stored</span>
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+    <footer class="footer">
+        <div class="footer-logo">Erie Street Kitchen</div>
+        <ul class="footer-links">
+            <li><a href="menu.html">Menu</a></li>
+            <li><a href="catering.html">Catering</a></li>
+        </ul>
+        <p class="footer-copy">&copy; 2026 Erie Street Kitchen</p>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // ── Populate order summary from sessionStorage ──
+        const raw = sessionStorage.getItem('cateringOrder');
+        if (!raw) {
+            // No order data — redirect back to the form
+            window.location.href = 'cateringForm.html';
+        } else {
+            const order = JSON.parse(raw);
+
+            document.getElementById('s-name').textContent =
+                `${order.firstName} ${order.lastName}`;
+
+            document.getElementById('s-date').textContent =
+                order.eventDate
+                    ? new Date(order.eventDate + 'T00:00:00').toLocaleDateString('en-US', { weekday: 'short', year: 'numeric', month: 'long', day: 'numeric' })
+                    : '—';
+
+            document.getElementById('s-time').textContent =
+                order.eventTime
+                    ? new Date('1970-01-01T' + order.eventTime).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })
+                    : '—';
+
+            document.getElementById('s-guests').textContent = order.guestCount || '—';
+            document.getElementById('s-type').textContent   = order.eventType  || '—';
+            document.getElementById('s-location').textContent = order.location || '—';
+
+            const menuContainer = document.getElementById('s-menu');
+            if (order.menuItems && order.menuItems.length) {
+                menuContainer.innerHTML = order.menuItems
+                    .map(item => `<span class="menu-tag">${item}</span>`)
+                    .join('');
+            } else {
+                menuContainer.textContent = 'None selected';
+            }
+        }
+
+        // ── Card number formatting (groups of 4) ──
+        document.getElementById('card-number').addEventListener('input', function () {
+            let val = this.value.replace(/\D/g, '').slice(0, 16);
+            this.value = val.replace(/(.{4})/g, '$1 ').trim();
+
+            const icon = document.getElementById('card-icon');
+            if (val.startsWith('4'))       icon.textContent = '💳'; // Visa placeholder
+            else if (/^5[1-5]/.test(val)) icon.textContent = '💳'; // MC placeholder
+            else if (val.startsWith('3'))  icon.textContent = '💳'; // Amex placeholder
+            else                           icon.textContent = '💳';
+        });
+
+        // ── Expiry formatting MM / YY ──
+        document.getElementById('card-expiry').addEventListener('input', function () {
+            let val = this.value.replace(/\D/g, '').slice(0, 4);
+            if (val.length >= 3) val = val.slice(0, 2) + ' / ' + val.slice(2);
+            this.value = val;
+        });
+
+        // ── CVV — digits only ──
+        document.getElementById('card-cvv').addEventListener('input', function () {
+            this.value = this.value.replace(/\D/g, '').slice(0, 4);
+        });
+
+        // ── ZIP — digits only ──
+        document.getElementById('card-zip').addEventListener('input', function () {
+            this.value = this.value.replace(/\D/g, '').slice(0, 5);
+        });
+
+        // ── Payment submit ──
+        document.getElementById('payment-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const btn = document.getElementById('pay-btn');
+            btn.disabled = true;
+            btn.textContent = 'Processing…';
+
+            // Simulate a brief processing delay, then show confirmation
+            setTimeout(() => {
+                sessionStorage.removeItem('cateringOrder');
+                document.getElementById('payment-content').style.display = 'none';
+                const confirmation = document.getElementById('confirmation');
+                confirmation.classList.add('show');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }, 1800);
+        });
+    </script>
+</body>
+</html>

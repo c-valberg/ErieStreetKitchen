@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Specials — Erie Street Kitchen</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Righteous&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="menu.css">
+    <link rel="icon" href="./pictures/ESK-icon.png" type="image/png">
+</head>
+<body>
+
+    <!-- LOADER -->
+    <div id="loader-altgreen">
+        <div class="loader-altgreen-inner">
+            <div class="loader-altgreen-title">
+                <span class="loader-altgreen-word" style="animation-delay: 0.1s">
+                    ERIE
+                    <img src="./pictures/ESK-icon.png" class="loader-altgreen-icon" alt="">
+                </span>
+                <span class="loader-altgreen-word" style="animation-delay: 0.25s">STREET</span>
+                <span class="loader-altgreen-word" style="animation-delay: 0.4s">KITCHEN</span>
+            </div>
+            <div class="loader-altgreen-bar-track">
+                <div class="loader-altgreen-bar"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- NAV -->
+    <nav class="navbar">
+        <div class="nav-inner">
+            <div class="nav-logo">
+                <a href="index.html">
+                    <img src="./pictures/ESK-icon.png" alt="Erie Street Kitchen">
+                </a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="menu.html">Menu</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#hours">Hours</a></li>
+                <li><a href="index.html#visit">Visit Us</a></li>
+                <li><a href="catering.html">Catering</a></li>
+            </ul>
+            <button class="hamburger" aria-label="Toggle menu" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+        <div class="mobile-menu">
+            <ul>
+                <li><a href="menu.html">Menu</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#hours">Hours</a></li>
+                <li><a href="index.html#visit">Visit Us</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <div class="menu-hero">
+        <div class="menu-hero-inner">
+            <p class="menu-eyebrow">Erie Street Kitchen</p>
+            <h1 class="menu-title">Today's<br>Specials.</h1>
+        </div>
+    </div>
+
+    <!-- MENU BODY -->
+    <div class="menu-body">
+        <div class="menu-section">
+            <div class="menu-section-header">
+                <h2>Specials</h2>
+                <div class="section-rule"></div>
+            </div>
+
+            <!--
+            ============================================================
+            HOW TO CONNECT YOUR GOOGLE SHEET
+            ============================================================
+            1. Open your Google Sheet
+            2. Go to File → Share → Publish to web
+            3. In the dropdowns, select your sheet tab and "Comma-separated values (.csv)"
+            4. Click "Publish" and copy the URL
+            5. Replace the SHEET_CSV_URL value below with your copied URL
+
+            Your sheet should have these columns (row 1 = headers):
+              Name | Description | Price | Tags | Notes
+
+            Tags column: comma-separated, e.g.  gf,v
+            Notes column: optional small print, e.g. "seasonal"
+            Leave any cell blank to skip that field.
+            ============================================================
+            -->
+
+            <div id="specials-grid" class="card-grid">
+                <!-- Cards are injected here by JavaScript -->
+            </div>
+
+            <p id="specials-error" style="display:none; opacity:0.5; font-family: var(--font-body); font-size:0.9rem; margin-top:2rem;">
+                Could not load specials. Please check back soon.
+            </p>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-logo">Erie Street Kitchen</div>
+        <ul class="footer-links">
+            <li><a href="menu.html">Menu</a></li>
+        </ul>
+        <p class="footer-copy">&copy; 2026 Erie Street Kitchen</p>
+    </footer>
+
+    <script>
+        // ============================================================
+        // PASTE YOUR PUBLISHED GOOGLE SHEET CSV URL HERE
+        // ============================================================
+        const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTPi0s2uJDoUE-5hvQa9AEBd8jZykMXsbPqzDbVakRQIBoWIVeArjpamnz1doc0as09t9cKR7ExSDRh/pub?gid=0&single=true&output=csv';
+        // ============================================================
+
+        // Placeholder data shown until a real sheet URL is set
+        const PLACEHOLDERS = Array.from({ length: 20 }, (_, i) => ({
+            name: `Special Item ${i + 1}`,
+            description: 'Description will appear here once your Google Sheet is connected.',
+            price: '$00',
+            tags: i % 3 === 0 ? ['gf'] : i % 5 === 0 ? ['gf', 'v'] : [],
+            notes: ''
+        }));
+
+        // Parse a CSV string into an array of objects keyed by header row
+        function parseCSV(text) {
+            const lines = text.trim().split('\n').map(l => l.trim()).filter(Boolean);
+            if (lines.length < 2) return [];
+            const headers = lines[0].split(',').map(h => h.trim().toLowerCase());
+            return lines.slice(1).map(line => {
+                // Handle quoted fields with commas inside
+                const cols = [];
+                let current = '';
+                let inQuotes = false;
+                for (const char of line) {
+                    if (char === '"') { inQuotes = !inQuotes; }
+                    else if (char === ',' && !inQuotes) { cols.push(current.trim()); current = ''; }
+                    else { current += char; }
+                }
+                cols.push(current.trim());
+                const obj = {};
+                headers.forEach((h, i) => obj[h] = cols[i] || '');
+                return obj;
+            });
+        }
+
+        // Build a card element from a data object
+        function buildCard(item) {
+            const tags = (item.tags || '')
+                .split(',')
+                .map(t => t.trim())
+                .filter(Boolean);
+
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.innerHTML = `
+                <div class="card-name">${item.name || 'Untitled'}</div>
+                ${tags.length ? `<div class="card-tags">${tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>` : ''}
+                ${item.description ? `<div class="card-desc">${item.description}</div>` : ''}
+                <div class="card-footer">
+                    ${item.price ? `<span class="card-price">${item.price}</span>` : ''}
+                    ${item.notes ? `<span class="card-price-note">${item.notes}</span>` : ''}
+                </div>
+            `;
+            return card;
+        }
+
+        // Render an array of item objects into the grid
+        function renderCards(items) {
+            const grid = document.getElementById('specials-grid');
+            grid.innerHTML = '';
+            items.forEach((item, i) => {
+                const card = buildCard(item);
+                grid.appendChild(card);
+                // Staggered entrance animation
+                setTimeout(() => card.classList.add('visible'), i * 60);
+            });
+        }
+
+        // Try to load from Google Sheet; fall back to placeholders
+        async function loadSpecials() {
+            if (!SHEET_CSV_URL || SHEET_CSV_URL === 'YOUR_GOOGLE_SHEET_CSV_URL_HERE') {
+                renderCards(PLACEHOLDERS);
+                return;
+            }
+            try {
+                const res = await fetch(SHEET_CSV_URL);
+                if (!res.ok) throw new Error('Network response not ok');
+                const text = await res.text();
+                const rows = parseCSV(text);
+                if (rows.length === 0) throw new Error('Empty sheet');
+                renderCards(rows);
+            } catch (err) {
+                console.warn('Could not load Google Sheet, showing placeholders.', err);
+                renderCards(PLACEHOLDERS);
+                document.getElementById('specials-error').style.display = 'block';
+            }
+        }
+
+        // ── Navbar scroll ──
+        window.addEventListener('scroll', () => {
+            document.querySelector('.navbar').classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        // ── Hamburger ──
+        const hamburger = document.querySelector('.hamburger');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const navbar = document.querySelector('.navbar');
+        hamburger.addEventListener('click', () => {
+            const isOpen = mobileMenu.classList.contains('open');
+            if (!isOpen) {
+                mobileMenu.classList.add('open');
+                hamburger.classList.add('open');
+                hamburger.setAttribute('aria-expanded', 'true');
+                navbar.classList.add('scrolled', 'menu-open');
+            } else {
+                mobileMenu.classList.remove('open');
+                hamburger.classList.remove('open');
+                hamburger.setAttribute('aria-expanded', 'false');
+                navbar.classList.remove('menu-open');
+                if (window.scrollY <= 50) navbar.classList.remove('scrolled');
+            }
+        });
+
+        // ── Loader ──
+        const loader = document.getElementById('loader-altgreen');
+        const bar = document.querySelector('.loader-altgreen-bar');
+        let progress = 0;
+        const interval = setInterval(() => {
+            progress += Math.random() * 15;
+            if (progress > 90) progress = 90;
+            bar.style.width = progress + '%';
+        }, 100);
+        const minDisplay = new Promise(res => setTimeout(res, 1400));
+        const pageLoad = new Promise(res => window.addEventListener('load', res));
+        Promise.all([minDisplay, pageLoad]).then(() => {
+            clearInterval(interval);
+            bar.style.width = '100%';
+            setTimeout(() => {
+                loader.classList.add('hidden');
+                loader.addEventListener('transitionend', () => loader.remove(), { once: true });
+            }, 400);
+        });
+
+        // ── Load specials on page ready ──
+        loadSpecials();
+    </script>
+</body>
+</html>

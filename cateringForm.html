@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catering — Erie Street Kitchen</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Righteous&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="./pictures/ESK-icon.png" type="image/png">
+    <style>
+        :root {
+            --red:    #E80003;
+            --black:  #000000;
+            --white:  #FEFCF7;
+            --cream:  #F5F0E8;
+            --green:  #7CA583;
+            --yellow: #B67116;
+            --font-display: 'Righteous', cursive;
+            --font-body:    'Nunito', sans-serif;
+        }
+
+        body {
+            background: var(--white);
+            color: var(--black);
+            font-family: var(--font-body);
+            overflow-x: hidden;
+        }
+
+        /* ── HERO ── */
+        .catering-hero {
+            background: var(--black);
+            padding: 10rem 3rem 5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .catering-hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(
+                -45deg,
+                transparent,
+                transparent 40px,
+                rgba(232,0,3,0.04) 40px,
+                rgba(232,0,3,0.04) 41px
+            );
+            pointer-events: none;
+        }
+
+        .catering-hero-inner {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .catering-eyebrow {
+            font-family: var(--font-body);
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--red);
+            margin-bottom: 1rem;
+            opacity: 0;
+            animation: fadeUp 0.6s ease 0.2s forwards;
+        }
+
+        .catering-title {
+            font-family: var(--font-display);
+            font-size: clamp(3rem, 8vw, 7rem);
+            color: var(--white);
+            line-height: 0.95;
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            animation: fadeUp 0.6s ease 0.4s forwards;
+        }
+
+        .catering-subtitle {
+            font-family: var(--font-body);
+            font-size: 1rem;
+            color: var(--white);
+            opacity: 0;
+            letter-spacing: 0.05em;
+            max-width: 500px;
+            animation: fadeUp 0.6s ease 0.6s forwards;
+        }
+
+        .catering-subtitle span {
+            opacity: 0.45;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ── FORM WRAPPER ── */
+        .catering-body {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 5rem 3rem 8rem;
+        }
+
+        /* ── FORM SECTIONS ── */
+        .form-block {
+            margin-bottom: 4rem;
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .form-block.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .form-block-header {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-block-number {
+            font-family: var(--font-display);
+            font-size: 3rem;
+            color: var(--red);
+            opacity: 0.2;
+            line-height: 1;
+            flex-shrink: 0;
+        }
+
+        .form-block-title {
+            font-family: var(--font-display);
+            font-size: clamp(1.5rem, 3vw, 2.2rem);
+            color: var(--black);
+            letter-spacing: 0.03em;
+        }
+
+        .form-block-rule {
+            flex: 1;
+            height: 2px;
+            background: var(--black);
+            opacity: 0.08;
+        }
+
+        /* ── FIELDS ── */
+        .field-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.25rem;
+        }
+
+        .field-grid.single {
+            grid-template-columns: 1fr;
+        }
+
+        .field {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .field.full {
+            grid-column: 1 / -1;
+        }
+
+        .field label {
+            font-family: var(--font-body);
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--black);
+            opacity: 0.5;
+        }
+
+        .field input,
+        .field select,
+        .field textarea {
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            color: var(--black);
+            background: var(--cream);
+            border: 2px solid transparent;
+            padding: 0.85rem 1rem;
+            outline: none;
+            transition: border-color 0.2s, background 0.2s;
+            width: 100%;
+            appearance: none;
+            -webkit-appearance: none;
+        }
+
+        .field input:focus,
+        .field select:focus,
+        .field textarea:focus {
+            border-color: var(--red);
+            background: var(--white);
+        }
+
+        .field textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .field select {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23000' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            padding-right: 2.5rem;
+            cursor: pointer;
+        }
+
+        /* ── MENU CHECKBOXES ── */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.75rem;
+        }
+
+        .menu-item {
+            position: relative;
+        }
+
+        .menu-item input[type="checkbox"] {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .menu-item label {
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+            padding: 1rem;
+            background: var(--cream);
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: border-color 0.2s, background 0.2s;
+            opacity: 1;
+        }
+
+        .menu-item input[type="checkbox"]:checked + label {
+            border-color: var(--red);
+            background: var(--white);
+        }
+
+        .menu-item-name {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            color: var(--black);
+            letter-spacing: 0.02em;
+        }
+
+        .menu-item-desc {
+            font-family: var(--font-body);
+            font-size: 0.72rem;
+            color: var(--black);
+            opacity: 0.45;
+            letter-spacing: 0.03em;
+        }
+
+        .menu-item-check {
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(0,0,0,0.2);
+            border-radius: 50%;
+            margin-bottom: 0.5rem;
+            transition: background 0.2s, border-color 0.2s;
+            flex-shrink: 0;
+        }
+
+        .menu-item input[type="checkbox"]:checked + label .menu-item-check {
+            background: var(--red);
+            border-color: var(--red);
+        }
+
+        /* ── SUBMIT ── */
+        .submit-row {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .submit-btn {
+            font-family: var(--font-body);
+            font-weight: 700;
+            font-size: 0.85rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--white);
+            background: var(--red);
+            border: 2px solid var(--red);
+            padding: 1rem 2.5rem;
+            cursor: pointer;
+            transition: background 0.25s, color 0.25s;
+        }
+
+        .submit-btn:hover {
+            background: transparent;
+            color: var(--red);
+        }
+
+        .submit-note {
+            font-family: var(--font-body);
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+            color: var(--black);
+            opacity: 0.35;
+        }
+
+        /* ── CONFIRMATION ── */
+        .confirmation {
+            display: none;
+            text-align: center;
+            padding: 5rem 3rem;
+        }
+
+        .confirmation.show {
+            display: block;
+        }
+
+        .confirmation-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .confirmation h2 {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            color: var(--black);
+            margin-bottom: 1rem;
+        }
+
+        .confirmation p {
+            font-family: var(--font-body);
+            font-size: 1rem;
+            color: var(--black);
+            opacity: 0.55;
+            max-width: 400px;
+            margin: 0 auto 2rem;
+            line-height: 1.7;
+        }
+
+        .confirmation a {
+            font-family: var(--font-body);
+            font-weight: 700;
+            font-size: 0.8rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--red);
+            text-decoration: none;
+            border-bottom: 2px solid var(--red);
+            padding-bottom: 2px;
+        }
+
+        /* ── FOOTER ── */
+        .footer {
+            background: var(--black);
+            color: var(--white);
+            padding: 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+
+        .footer-logo {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            color: var(--white);
+            letter-spacing: 0.05em;
+        }
+
+        .footer-links { list-style: none; display: flex; gap: 2rem; }
+        .footer-links a {
+            font-family: var(--font-body);
+            font-weight: 700;
+            font-size: 0.8rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            text-decoration: none;
+            color: var(--white);
+            transition: color 0.2s;
+        }
+        .footer-links a:hover { color: var(--red); }
+
+        .footer-copy {
+            font-family: var(--font-body);
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            opacity: 0.4;
+            text-transform: uppercase;
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 768px) {
+            .catering-hero { padding: 8rem 1.5rem 4rem; }
+            .catering-body { padding: 3rem 1.5rem 5rem; }
+            .field-grid { grid-template-columns: 1fr; }
+            .menu-grid { grid-template-columns: 1fr 1fr; }
+            .submit-row { flex-direction: column; align-items: flex-start; }
+        }
+
+        @media (max-width: 480px) {
+            .menu-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- LOADER -->
+    <div id="loader">
+        <div class="loader-inner">
+            <div class="loader-title">
+                <span class="loader-word" style="animation-delay: 0.1s">
+                    ERIE
+                    <img src="./pictures/ESK-icon.png" class="loader-icon" alt="">
+                </span>
+                <span class="loader-word" style="animation-delay: 0.25s">STREET</span>
+                <span class="loader-word" style="animation-delay: 0.4s">KITCHEN</span>
+            </div>
+            <div class="loader-bar-track">
+                <div class="loader-bar"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- NAV -->
+    <nav class="navbar">
+        <div class="nav-inner">
+            <div class="nav-logo">
+                <a href="index.html">
+                    <img src="./pictures/ESK-icon.png" alt="Erie Street Kitchen">
+                </a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="menu.html">Menu</a></li>
+                <li><a href="catering.html">Catering</a></li>
+            </ul>
+            <button class="hamburger" aria-label="Toggle menu" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+        <div class="mobile-menu">
+            <ul>
+                <li><a href="menu.html">Menu</a></li>
+                <li><a href="catering.html">Catering</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <div class="catering-hero">
+        <div class="catering-hero-inner">
+            <p class="catering-eyebrow">Erie Street Kitchen</p>
+            <h1 class="catering-title">Catering<br>Request.</h1>
+            <p class="catering-subtitle"><span>Tell us about your event and we'll be in touch to confirm the details.</span></p>
+        </div>
+    </div>
+
+    <!-- FORM -->
+    <div class="catering-body">
+        <form id="catering-form">
+
+            <!-- CONFIRMATION (hidden until submit) -->
+            <div class="confirmation" id="confirmation">
+                <div class="confirmation-icon">🍗</div>
+                <h2>We Got It.</h2>
+                <p>Thanks for reaching out! We'll review your request and get back to you within 24 hours to confirm details.</p>
+                <a href="index.html">← Back to Home</a>
+            </div>
+
+            <div id="form-contents">
+
+                <!-- BLOCK 1: CONTACT -->
+                <div class="form-block">
+                    <div class="form-block-header">
+                        <span class="form-block-number">01</span>
+                        <h2 class="form-block-title">Contact Info</h2>
+                        <div class="form-block-rule"></div>
+                    </div>
+                    <div class="field-grid">
+                        <div class="field">
+                            <label for="first-name">First Name</label>
+                            <input type="text" id="first-name" name="first-name" placeholder="Jane" required>
+                        </div>
+                        <div class="field">
+                            <label for="last-name">Last Name</label>
+                            <input type="text" id="last-name" name="last-name" placeholder="Smith" required>
+                        </div>
+                        <div class="field">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" placeholder="jane@email.com" required>
+                        </div>
+                        <div class="field">
+                            <label for="phone">Phone</label>
+                            <input type="tel" id="phone" name="phone" placeholder="(330) 000-0000" required>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- BLOCK 2: EVENT DETAILS -->
+                <div class="form-block">
+                    <div class="form-block-header">
+                        <span class="form-block-number">02</span>
+                        <h2 class="form-block-title">Event Details</h2>
+                        <div class="form-block-rule"></div>
+                    </div>
+                    <div class="field-grid">
+                        <div class="field">
+                            <label for="event-date">Event Date</label>
+                            <input type="date" id="event-date" name="event-date" required>
+                        </div>
+                        <div class="field">
+                            <label for="event-time">Start Time</label>
+                            <input type="time" id="event-time" name="event-time" required>
+                        </div>
+                        <div class="field">
+                            <label for="guest-count">Expected Guest Count</label>
+                            <select id="guest-count" name="guest-count" required>
+                                <option value="" disabled selected>Select a range</option>
+                                <option>Under 25</option>
+                                <option>25 – 50</option>
+                                <option>50 – 100</option>
+                                <option>100 – 200</option>
+                                <option>200+</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label for="event-type">Event Type</label>
+                            <select id="event-type" name="event-type">
+                                <option value="" disabled selected>Select type</option>
+                                <option>Corporate</option>
+                                <option>Wedding</option>
+                                <option>Birthday / Party</option>
+                                <option>Festival / Outdoor</option>
+                                <option>Other</option>
+                            </select>
+                        </div>
+                        <div class="field full">
+                            <label for="location">Event Location / Address</label>
+                            <input type="text" id="location" name="location" placeholder="163 W. Erie Street, Kent, OH" required>
+                        </div>
+                        <div class="field full">
+                            <label for="notes">Additional Notes</label>
+                            <textarea id="notes" name="notes" placeholder="Dietary restrictions, setup needs, anything else we should know..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- BLOCK 3: MENU SELECTIONS -->
+                <div class="form-block">
+                    <div class="form-block-header">
+                        <span class="form-block-number">03</span>
+                        <h2 class="form-block-title">Menu Selections</h2>
+                        <div class="form-block-rule"></div>
+                    </div>
+                    <div class="menu-grid">
+                        <div class="menu-item">
+                            <input type="checkbox" id="m-chicken" name="menu[]" value="Hot Chicken">
+                            <label for="m-chicken">
+                                <div class="menu-item-check"></div>
+                                <div class="menu-item-name">Hot Chicken</div>
+                                <div class="menu-item-desc">Southern fried, your heat level</div>
+                            </label>
+                        </div>
+                        <div class="menu-item">
+                            <input type="checkbox" id="m-jambalaya" name="menu[]" value="Jambalaya">
+                            <label for="m-jambalaya">
+                                <div class="menu-item-check"></div>
+                                <div class="menu-item-name">Jambalaya</div>
+                                <div class="menu-item-desc">Chicken, sausage & shrimp</div>
+                            </label>
+                        </div>
+                        <div class="menu-item">
+                            <input type="checkbox" id="m-pulled-pork" name="menu[]" value="Pulled Pork">
+                            <label for="m-pulled-pork">
+                                <div class="menu-item-check"></div>
+                                <div class="menu-item-name">Pulled Pork</div>
+                                <div class="menu-item-desc">With Carolina BBQ</div>
+                            </label>
+                        </div>
+                        <div class="menu-item">
+                            <input type="checkbox" id="m-seafood" name="menu[]" value="Seafood">
+                            <label for="m-seafood">
+                                <div class="menu-item-check"></div>
+                                <div class="menu-item-name">Seafood</div>
+                                <div class="menu-item-desc">Shrimp, perch, or catfish</div>
+                            </label>
+                        </div>
+                        <div class="menu-item">
+                            <input type="checkbox" id="m-salads" name="menu[]" value="Salads">
+                            <label for="m-salads">
+                                <div class="menu-item-check"></div>
+                                <div class="menu-item-name">Salads</div>
+                                <div class="menu-item-desc">Fresh local greens</div>
+                            </label>
+                        </div>
+                        <div class="menu-item">
+                            <input type="checkbox" id="m-sides" name="menu[]" value="Sides">
+                            <label for="m-sides">
+                                <div class="menu-item-check"></div>
+                                <div class="menu-item-name">Sides</div>
+                                <div class="menu-item-desc">Coleslaw, fries, hush puppies</div>
+                            </label>
+                        </div>
+                        <div class="menu-item">
+                            <input type="checkbox" id="m-soups" name="menu[]" value="Soups">
+                            <label for="m-soups">
+                                <div class="menu-item-check"></div>
+                                <div class="menu-item-name">Soups</div>
+                                <div class="menu-item-desc">Gumbo, bisque, soup of the day</div>
+                            </label>
+                        </div>
+                        <div class="menu-item">
+                            <input type="checkbox" id="m-veg" name="menu[]" value="Vegetarian Options">
+                            <label for="m-veg">
+                                <div class="menu-item-check"></div>
+                                <div class="menu-item-name">Vegetarian</div>
+                                <div class="menu-item-desc">Tofu jambalaya, salads & more</div>
+                            </label>
+                        </div>
+                        <div class="menu-item">
+                            <input type="checkbox" id="m-custom" name="menu[]" value="Custom / TBD">
+                            <label for="m-custom">
+                                <div class="menu-item-check"></div>
+                                <div class="menu-item-name">Custom / TBD</div>
+                                <div class="menu-item-desc">We'll work it out together</div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SUBMIT -->
+                <div class="submit-row">
+                    <button type="submit" class="submit-btn">Submit Request</button>
+                    <p class="submit-note">We'll follow up within 24 hours.</p>
+                </div>
+
+            </div><!-- end #form-contents -->
+        </form>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-logo">Erie Street Kitchen</div>
+        <ul class="footer-links">
+            <li><a href="menu.html">Menu</a></li>
+        </ul>
+        <p class="footer-copy">&copy; 2026 Erie Street Kitchen</p>
+    </footer>
+
+    <script>
+        // ── Navbar scroll ──
+        window.addEventListener('scroll', () => {
+            document.querySelector('.navbar').classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        // ── Hamburger ──
+        const hamburger = document.querySelector('.hamburger');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const navbar = document.querySelector('.navbar');
+        if (hamburger && mobileMenu) {
+            hamburger.addEventListener('click', () => {
+                const isOpen = mobileMenu.classList.contains('open');
+                if (!isOpen) {
+                    mobileMenu.classList.add('open');
+                    hamburger.classList.add('open');
+                    hamburger.setAttribute('aria-expanded', 'true');
+                    navbar.classList.add('scrolled', 'menu-open');
+                } else {
+                    mobileMenu.classList.remove('open');
+                    hamburger.classList.remove('open');
+                    hamburger.setAttribute('aria-expanded', 'false');
+                    navbar.classList.remove('menu-open');
+                    if (window.scrollY <= 50) navbar.classList.remove('scrolled');
+                }
+            });
+        }
+
+        // ── Loader ──
+        const loader = document.getElementById('loader');
+        const bar = document.querySelector('.loader-bar');
+        let progress = 0;
+        const interval = setInterval(() => {
+            progress += Math.random() * 15;
+            if (progress > 90) progress = 90;
+            bar.style.width = progress + '%';
+        }, 100);
+        const minDisplay = new Promise(res => setTimeout(res, 1400));
+        const pageLoad = new Promise(res => window.addEventListener('load', res));
+        Promise.all([minDisplay, pageLoad]).then(() => {
+            clearInterval(interval);
+            bar.style.width = '100%';
+            setTimeout(() => {
+                loader.classList.add('hidden');
+                loader.addEventListener('transitionend', () => loader.remove(), { once: true });
+            }, 400);
+        });
+
+        // ── Scroll-in animations ──
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('visible');
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.form-block').forEach(el => observer.observe(el));
+
+        // ── Form submit → POST to backend → confirmation ──
+        document.getElementById('catering-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const form = e.target;
+            const submitBtn = form.querySelector('.submit-btn');
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Sending…';
+
+            const menuItems = Array.from(
+                form.querySelectorAll('input[name="menu[]"]:checked')
+            ).map(cb => cb.value);
+
+            const payload = {
+                firstName:  form['first-name'].value.trim(),
+                lastName:   form['last-name'].value.trim(),
+                email:      form['email'].value.trim(),
+                phone:      form['phone'].value.trim(),
+                eventDate:  form['event-date'].value,
+                eventTime:  form['event-time'].value,
+                guestCount: form['guest-count'].value,
+                eventType:  form['event-type'].value,
+                location:   form['location'].value.trim(),
+                notes:      form['notes'].value.trim(),
+                menuItems,
+            };
+
+            try {
+                const res = await fetch('/api/catering', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload),
+                });
+
+                if (!res.ok) {
+                    const err = await res.json().catch(() => ({}));
+                    throw new Error(err.error || 'Server error');
+                }
+
+                sessionStorage.setItem('cateringOrder', JSON.stringify(payload));
+                window.location.href = 'payment.html';
+            } catch (err) {
+                console.error('Catering submission failed:', err);
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Submit Request';
+                alert('Something went wrong. Please try again or call us directly.');
+            }
+        });
+    </script>
+</body>
+</html>

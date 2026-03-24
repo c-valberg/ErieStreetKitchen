@@ -1,0 +1,233 @@
+/* =============================================
+   ERIE STREET KITCHEN — index.css
+   Styles specific to the home page (index.html)
+   ============================================= */
+
+:root {
+    --red:    #E80003;
+    --black:  #000000;
+    --white:  #FEFCF7;
+    --cream:  #F5F0E8;
+    --green:  #7CA583; 
+    --yellow: #B67116;
+    --font-display: 'Righteous', cursive;
+    --font-body:    'Nunito', sans-serif;
+}
+
+/* =============================================
+   SECTIONS
+   ============================================= */
+
+.section {
+    min-height: unset;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
+    background: var(--cream);
+    padding: clamp(4rem, 5vw, 8rem) clamp(12rem, 8vw, 12rem);
+    /*             ↑ min ↑fluid ↑ max   ↑ min ↑ fluid ↑ max */
+}
+
+.section.alt1 { background: var(--green); color: var(--white); }
+.section.alt2 { background: var(--yellow); color: var(--white); }
+.section.alt3 { background: var(--white); color: var(--black); }
+
+.section h2 {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    color: var(--white);
+    letter-spacing: 0.05em;
+    text-align: left;
+}
+
+.section.alt3 h2 {
+    color: var(--black);
+    letter-spacing: 0.1em;
+}
+
+.section p {
+    font-family: var(--font-body);
+    font-size: clamp(0.75rem, 2vw, 1rem);
+    letter-spacing: clamp(0.03em, 1vw, 0.1em);
+    opacity: 0.5;
+    text-align: left;
+}
+
+.section.alt1 p {
+    padding-right: clamp(0rem, 20vw, 30rem);
+    /*                    ↑ min  ↑ fluid  ↑ max */
+}
+
+
+.section.alt2 p,
+.section.alt3 p {
+    color: inherit;
+    letter-spacing: 0.1em;
+    text-align: left;
+    text-transform: uppercase;
+}
+
+.section .meta {
+    font-family: var(--font-body);
+    font-size: clamp(0.65rem, 0.8vw, 0.85rem);
+    padding-right: clamp(0rem, 0vw, 0rem);
+    opacity: 0.6;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.section .meta .animate-up-meta {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.section-img {
+    width: 180px;
+    height: auto;
+    margin-bottom: 1rem;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.section-img.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.visit-inner {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 3rem;
+    width: 100%;
+}
+
+.visit-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    text-align: right;
+}
+
+/* INFO ROW (Hours / Visit Us) */
+.info-row {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    width: 100%;
+}
+
+.info-left {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    flex-shrink: 0;
+}
+
+.info-label {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: none;
+    opacity: 1;
+    color: var(--black);
+}
+
+.info-sub {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    color: var(--red);
+    opacity: 1;
+    text-transform: none;
+    letter-spacing: 0;
+}
+
+.info-dots {
+    flex: 1;
+    border-bottom: 2px dotted rgba(0,0,0,0.2);
+    margin-bottom: 0.1rem;
+}
+
+.info-right {
+    font-family: var(--font-display);
+    font-size: clamp(1.2rem, 3vw, 2rem);
+    color: var(--black);
+    text-align: right;
+    flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+    .info-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    .info-dots { display: none; }
+    .info-right { text-align: left; }
+}
+
+/* =============================================
+   ABOUT SECTION — compact override
+   ============================================= */
+
+#about {
+    padding: clamp(4rem, 5vw, 8rem) clamp(12rem, 8vw, 12rem);
+    /*             ↑ min ↑fluid ↑ max   ↑ min ↑ fluid ↑ max */
+    gap: 0.6rem;
+}
+
+#about h2 {
+    font-size: clamp(1.8rem, 4vw, 3rem);
+}
+
+#about p {
+    font-size: clamp(0.75rem, 1.6vw, 0.9rem);
+}
+
+/* =============================================
+    BUTTON
+    ============================================*/
+.btn-alt {
+    display: inline-block;
+    align-self: flex-start;
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--gree);
+    background: var(--green);
+    padding: 0.9rem 2rem;
+    border: 2px solid var(--white);
+    transition: background 0.25s, color 0.25s;
+    opacity: 0;
+    animation: fadeIn 0.6s ease 1s forwards;
+}
+
+.btn-alt:hover {
+    background: var(--white);
+    color: var(--green);
+}
+
+/* =============================================
+   RESPONSIVE — index
+   ============================================= */
+
+@media (max-width: 768px) {
+    .section {
+        padding: 2rem 1.5rem;
+        /* ↑ vertical  ↑ horizontal — increase horizontal to add more side space (narrower text),
+                                       decrease it to use more of the screen width */
+    }
+    .splash { padding: 5rem 1.5rem 3rem; }
+    .splash-inner { grid-template-columns: 1fr; }
+    .splash-deco { display: none; }
+    .tagline { font-size: 0.7rem; }
+    .visit-inner { flex-direction: column; align-items: flex-end; }
+}
